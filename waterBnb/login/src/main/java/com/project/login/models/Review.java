@@ -26,9 +26,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Review{
 	@Id
 	@GeneratedValue
-	private long id;
+	private Long id;
 	private String poolReview;
 	private int rating;
+	
 
 	// Member variables and annotations go here.
 	
@@ -49,13 +50,27 @@ public class Review{
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
-    private User user; //user
+	private User user; //user
+	
+	public Pool getPool(){
+		return pool;
+	}
+	public void setPool(Pool pool){
+		this.pool = pool;
+	}
+
+	public User getUser(){
+		return user;
+	}
+	public void setUser(User user){
+		this.user = user;
+	}
 
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public Date getCreatedAt() {

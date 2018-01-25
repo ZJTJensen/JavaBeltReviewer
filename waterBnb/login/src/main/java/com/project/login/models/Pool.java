@@ -21,6 +21,8 @@ import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.project.login.services.ReviewService;
+
 @Entity
 public class Pool{
 	@Id
@@ -47,10 +49,23 @@ public class Pool{
 
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
-    private User user;//user
+    private User host;//user
 
 	@OneToMany(mappedBy="pool", fetch = FetchType.LAZY)
-    private List<Review> review; //review
+	private List<Review> reviews; //review
+	
+	public User getHost(){
+		return host;
+	}
+	public void setHost(User host){
+		this.host = host;
+	}
+	public List<Review> getReviews(){
+		return reviews;
+	}
+	public void setHost(List<Review> reviews){
+		this.reviews = reviews;
+	}
 	
 	public long getId() {
 		return id;

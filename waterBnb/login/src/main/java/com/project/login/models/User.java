@@ -54,6 +54,13 @@ public class User{
 	public void onCreate(){this.createdAt = new Date();}
 	@PreUpdate
 	public void onUpdate(){this.updatedAt = new Date();}
+
+	@OneToMany(mappedBy="user", fetch = FetchType.LAZY)
+    private List<Review> reviews;
+    
+
+	@OneToMany(mappedBy="host", fetch = FetchType.LAZY)
+    private List<Pool> pool;
 	
 	public long getId() {
 		return id;

@@ -58,7 +58,15 @@
         <p>
             <form:label path="confirm">Password Confirmation:</form:label>
             <form:password path="confirm"/>
-        </p>
+		</p>
+		<p>
+		
+				<form:errors path="userType"></form:errors>
+				<form:select path="userType">
+					<form:option value="Guest">Guest</form:option>
+					<form:option value="Host">Host</form:option>
+				</form:select>
+		</p>
         <input type="submit" value="Register!"/>
     </form:form>
 	</body>

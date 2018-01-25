@@ -30,19 +30,16 @@ public class UserController{
 		this.userService = userService;
 
 	}
+	@RequestMapping("/")
+	public String search(@ModelAttribute("user") User user, HttpSession s, Model model){
+		model.addAttribute("id", s.getAttribute("id"));
+		System.out.println("hello world" + s.getAttribute("id"));
+		return "search";
+	}
 	
 	@RequestMapping("/register")
 	public String register(@ModelAttribute("user") User user, HttpSession s){
-		s.setAttribute("id", null);
 		return "register";
-	}
-	@RequestMapping("/dashboard")
-	public String dashboard(HttpSession s){
-		if(s.getAttribute("id")!= null){
-			return "dashboard";
-			
-		}
-		return "redirect:/";
 	}
 	@RequestMapping("/logout")
 	public String logout(HttpSession s){
@@ -58,6 +55,9 @@ public class UserController{
 			System.out.println("Your user is 0" + user);
 			userService.create(user);
 			session.setAttribute("id", user.getId());
+			if (user.getUserType().equals("Host")){
+				return "redirect:/dashboard";
+			}
 			return "redirect:/";
 		}
 	}
@@ -69,7 +69,10 @@ public class UserController{
 		}else{
 			if( userService.isMatch(password, user.getPassword()) ){
 				session.setAttribute("id", user.getId());
-				return "redirect:/dashboard";
+				if (user.getUserType().equals("Host")){
+					return "redirect:/dashboard";
+				}
+				return "redirect:/";
 
 			}else{
 				return "redirect:/regiseter";

@@ -30,9 +30,6 @@ public class Router{
 		String url = req.getRequestURI().toString();
 
 
-		if(session.getAttribute("id")!= null){
-			return "redirect:/dashboard";
-		}
-		return "redirect:/register";
+		return "redirect:/";
 	}		
 }
