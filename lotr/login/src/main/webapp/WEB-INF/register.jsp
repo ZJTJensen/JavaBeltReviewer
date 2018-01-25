@@ -18,7 +18,7 @@
 
 			<form method="POST" action="/login">
 				<p>
-					<label for="email">Email</label>
+					<label for="email">Username/Email</label>
 					<input id="email" name="email"/>
 					
 				</p>
@@ -32,15 +32,10 @@
 
 		<form:form method="POST" action="/register" modelAttribute="user">
         <p>
-            <form:label path="firstName">First Name:
-				<form:errors path="firstName"></form:errors>
+            <form:label path="username">Username:
+				<form:errors path="username"></form:errors>
 			</form:label>
-            <form:input path="firstName"/>
-        </p>
-        <p>
-			<form:label path="lastName">Last Name:</form:label>
-			<form:errors path="lastName"></form:errors>
-            <form:input path="lastName"/>
+            <form:input path="username"/>
         </p>
         <p>
             <form:label path="email">Email:

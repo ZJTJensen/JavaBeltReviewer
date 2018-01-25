@@ -31,6 +31,12 @@ public class UserService {
 		System.out.println("Your user is 1" + user.getPassword());
 		user.setPassword(bcrypt.encode(user.getPassword()));
 		System.out.println("Your user is 2" + user);
+		List<User>users =(List<User>) userRepository.findAll();
+		if(users.size() > 0 ){
+			user.setAdmin(2);
+		}else{
+			user.setAdmin(1);
+		}
 		userRepository.save(user);
 		
 	}
@@ -48,6 +54,9 @@ public class UserService {
 	}
 	public User findByEmail(String email){
 		return (User)userRepository.findByEmail(email);
+	}
+	public User findByUsername(String username){
+		return (User)userRepository.findByUsername(username);
 	}
 	
 	// Crud methods to act on services go here.

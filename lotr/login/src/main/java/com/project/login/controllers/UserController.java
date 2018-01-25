@@ -33,24 +33,19 @@ public class UserController{
 
 	}
 	
-	@RequestMapping("/register")
+	@RequestMapping("/")
 	public String register(@ModelAttribute("user") User user, HttpSession s){
 		s.setAttribute("id", null);
 		return "register";
 	}
-	@RequestMapping("/dashboard")
-	public String dashboard(HttpSession s){
-		if(s.getAttribute("id")!= null){
-			return "dashboard";
-			
-		}
-		return "redirect:/";
-	}
+
 	@RequestMapping("/logout")
 	public String logout(HttpSession s){
 		s.setAttribute("id", null);
-		return "redirect:/register";
+		return "redirect:/";
 	}
+
+
 
 	@PostMapping("/register")
 	public String creater(@Valid @ModelAttribute("user") User user, BindingResult res, HttpSession session){
@@ -61,23 +56,35 @@ public class UserController{
 			System.out.println("Your user is 0" + user);
 			userService.create(user);
 			session.setAttribute("id", user.getId());
-			return "redirect:/";
+			return "redirect:/dashboard";
 		}
 	}
 	@PostMapping("/login")
 	public String login(@RequestParam("email") String email, @RequestParam("password")String password, HttpSession session){
 		User user = userService.findByEmail(email);
+		
 		if(user == null){
-			return "redirect:/regiseter";
-		}else{
-			if( userService.isMatch(password, user.getPassword()) ){
-				session.setAttribute("id", user.getId());
-				return "redirect:/dashboard";
-
-			}else{
+			User user2 = userService.findByUsername(email);
+			if(user2 == null){
 				return "redirect:/regiseter";
-			}
+			}else{
+				if( userService.isMatch(password, user2.getPassword()) ){
+					session.setAttribute("id", user2.getId());
+					return "redirect:/dashboard";
+
+				}else{
+					return "redirect:/";
+				}
+		}
+	}else{
+		if( userService.isMatch(password, user.getPassword()) ){
+			session.setAttribute("id", user.getId());
+			return "redirect:/dashboard";
+
+		}else{
+			return "redirect:/";
 		}
  
 	}
+}
 }
